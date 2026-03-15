@@ -1,0 +1,14 @@
+C:\labs kpz\lab2\ex5\bin\Debug\net8.0\ex5.exe
+C:\labs kpz\lab2\ex5\bin\Debug\net8.0\ex5.deps.json
+C:\labs kpz\lab2\ex5\bin\Debug\net8.0\ex5.runtimeconfig.json
+C:\labs kpz\lab2\ex5\bin\Debug\net8.0\ex5.dll
+C:\labs kpz\lab2\ex5\bin\Debug\net8.0\ex5.pdb
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.GeneratedMSBuildEditorConfig.editorconfig
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.AssemblyInfoInputs.cache
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.AssemblyInfo.cs
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.csproj.CoreCompileInputs.cache
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.dll
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\refint\ex5.dll
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.pdb
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ex5.genruntimeconfig.cache
+C:\labs kpz\lab2\ex5\obj\Debug\net8.0\ref\ex5.dll

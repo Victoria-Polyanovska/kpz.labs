@@ -1,0 +1,169 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\labs kpz\\lab3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{51C21A56-3301-44E6-A414-34948837A6F6}|ex6\\ex6.csproj|c:\\labs kpz\\lab3\\ex6\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51C21A56-3301-44E6-A414-34948837A6F6}|ex6\\ex6.csproj|solutionrelative:ex6\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51C21A56-3301-44E6-A414-34948837A6F6}|ex6\\ex6.csproj|c:\\labs kpz\\lab3\\ex6\\flyweight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51C21A56-3301-44E6-A414-34948837A6F6}|ex6\\ex6.csproj|solutionrelative:ex6\\flyweight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFF7391D-C8C2-4657-804A-830C89F934D0}|ex5\\ex5.csproj|c:\\labs kpz\\lab3\\ex5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFF7391D-C8C2-4657-804A-830C89F934D0}|ex5\\ex5.csproj|solutionrelative:ex5\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF86609A-1DD3-4800-964B-715F4850B964}|ex4\\ex4.csproj|c:\\labs kpz\\lab3\\ex4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF86609A-1DD3-4800-964B-715F4850B964}|ex4\\ex4.csproj|solutionrelative:ex4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F17BB8AE-6333-4F81-A229-A9286FB78D64}|ex3\\ex3.csproj|c:\\labs kpz\\lab3\\ex3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F17BB8AE-6333-4F81-A229-A9286FB78D64}|ex3\\ex3.csproj|solutionrelative:ex3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{32065D73-EB98-4F94-ABA2-78847F521EB7}|ex2\\ex2.csproj|c:\\labs kpz\\lab3\\ex2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{32065D73-EB98-4F94-ABA2-78847F521EB7}|ex2\\ex2.csproj|solutionrelative:ex2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7E197D7-86C0-4E1E-A29E-4766E3F1BC4F}|ex1\\ex1.csproj|c:\\labs kpz\\lab3\\ex1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7E197D7-86C0-4E1E-A29E-4766E3F1BC4F}|ex1\\ex1.csproj|solutionrelative:ex1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1590482898:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 952,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Flyweight.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex6\\Flyweight.cs",
+              "RelativeDocumentMoniker": "ex6\\Flyweight.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex6\\Flyweight.cs*",
+              "RelativeToolTip": "ex6\\Flyweight.cs*",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAQwHYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:54:44.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex6\\Program.cs",
+              "RelativeDocumentMoniker": "ex6\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex6\\Program.cs*",
+              "RelativeToolTip": "ex6\\Program.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:51:10.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex5\\Program.cs",
+              "RelativeDocumentMoniker": "ex5\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex5\\Program.cs",
+              "RelativeToolTip": "ex5\\Program.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAuwHwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:50:15.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex4\\Program.cs",
+              "RelativeDocumentMoniker": "ex4\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex4\\Program.cs",
+              "RelativeToolTip": "ex4\\Program.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAADwvwkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:46:56.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex3\\Program.cs",
+              "RelativeDocumentMoniker": "ex3\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex3\\Program.cs",
+              "RelativeToolTip": "ex3\\Program.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAUwFwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:46:14.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex2\\Program.cs",
+              "RelativeDocumentMoniker": "ex2\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex2\\Program.cs",
+              "RelativeToolTip": "ex2\\Program.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAywBkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:45:25.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\labs kpz\\lab3\\ex1\\Program.cs",
+              "RelativeDocumentMoniker": "ex1\\Program.cs",
+              "ToolTip": "C:\\labs kpz\\lab3\\ex1\\Program.cs",
+              "RelativeToolTip": "ex1\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T17:42:41.663Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

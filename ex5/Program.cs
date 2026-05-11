@@ -87,8 +87,13 @@ public class LightElementNode : LightNode
     public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> створено.");
     public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> оновлено.");
 
+    public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> було створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> успішно оновлено.");
+
     public override string OuterHTML()
     {
+        OnCreated();
+
         StringBuilder sb = new StringBuilder();
         sb.Append("<" + TagName);
 
@@ -97,6 +102,8 @@ public class LightElementNode : LightNode
             sb.Append(" class=\"");
             sb.Append(string.Join(" ", CssClasses));
             sb.Append("\"");
+
+            OnStylesApplied();
         }
 
         if (ClosingType == "single")
@@ -112,6 +119,8 @@ public class LightElementNode : LightNode
 
         return sb.ToString();
     }
+    public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> було створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> успішно застосовано.");
 
     public override string InnerHTML()
     {

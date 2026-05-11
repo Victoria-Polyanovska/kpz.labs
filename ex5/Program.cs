@@ -1,36 +1,96 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-// 1. Базовий клас
+public interface INodeState
+{
+    string Render(LightElementNode node);
+}
+
+public class VisibleState : INodeState
+{
+    public string Render(LightElementNode node)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<" + node.TagName);
+
+        if (node.CssClasses.Count > 0)
+        {
+            sb.Append(" class=\"");
+            sb.Append(string.Join(" ", node.CssClasses));
+            sb.Append("\"");
+        }
+
+        if (node.ClosingType == "single")
+        {
+            sb.Append("/>");
+        }
+        else
+        {
+            sb.Append(">");
+            sb.Append(node.InnerHTML());
+            sb.Append("</" + node.TagName + ">");
+        }
+        return sb.ToString();
+    }
+}
+
+public class HiddenState : INodeState
+{
+    public string Render(LightElementNode node)
+    {
+        return $"";
+    }
+}
+
+public interface ICommand
+{
+    void Execute();
+    void Undo();
+}
+
+public class AddClassCommand : ICommand
+{
+    private readonly LightElementNode _node;
+    private readonly string _cssClass;
+
+    public AddClassCommand(LightElementNode node, string cssClass)
+    {
+        _node = node;
+        _cssClass = cssClass;
+    }
+
+    public void Execute() => _node.AddClass(_cssClass);
+    public void Undo() => _node.CssClasses.Remove(_cssClass);
+}
+
 public abstract class LightNode
 {
     public abstract string OuterHTML();
     public abstract string InnerHTML();
+    public virtual void OnCreated() { }
+    public virtual void OnStylesApplied() { }
+    public IEnumerable<LightNode> Enumerate() => new LightNodeIterator(this);
 }
 
-// 2. Текстовий вузол
 public class LightTextNode : LightNode
 {
     private string text;
-
-    public LightTextNode(string text)
-    {
-        this.text = text;
-    }
-
+    public LightTextNode(string text) { this.text = text; }
     public override string OuterHTML() => text;
     public override string InnerHTML() => text;
 }
 
-// 3. Елемент вузол
 public class LightElementNode : LightNode
 {
     public string TagName { get; }
-    public string DisplayType { get; } // block / inline
-    public string ClosingType { get; } // single / normal
+    public string DisplayType { get; }
+    public string ClosingType { get; }
     public List<string> CssClasses { get; }
     public List<LightNode> Children { get; }
+
+    private INodeState _state;
 
     public LightElementNode(string tagName, string displayType = "block", string closingType = "normal")
     {
@@ -39,46 +99,32 @@ public class LightElementNode : LightNode
         ClosingType = closingType;
         CssClasses = new List<string>();
         Children = new List<LightNode>();
+
+        _state = new VisibleState(); 
+        OnCreated();
+    }
+
+    public void SetState(INodeState state)
+    {
+        _state = state;
+        Console.WriteLine($"[State] Стан елемента <{TagName}> змінено на {state.GetType().Name}");
     }
 
     public void AddClass(string cssClass)
     {
-        CssClasses.Add(cssClass);
-    }
-
-    public void AddChild(LightNode child)
-    {
-        Children.Add(child);
-    }
-
-    public override string OuterHTML()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("<" + TagName);
-
-        if (CssClasses.Count > 0)
+        if (!CssClasses.Contains(cssClass))
         {
-            sb.Append(" class=\"");
-            sb.Append(string.Join(" ", CssClasses));
-            sb.Append("\"");
-        }
-
-        if (ClosingType == "single")
-        {
-            sb.Append("/>");
-            return sb.ToString();
-        }
-        else
-        {
-            sb.Append(">");
-            foreach (var child in Children)
-            {
-                sb.Append(child.OuterHTML());
-            }
-            sb.Append("</" + TagName + ">");
-            return sb.ToString();
+            CssClasses.Add(cssClass);
+            OnStylesApplied();
         }
     }
+
+    public void AddChild(LightNode child) => Children.Add(child);
+
+    public override void OnCreated() => Console.WriteLine($"[Hook] <{TagName}> створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі <{TagName}> оновлено.");
+
+    public override string OuterHTML() => _state.Render(this);
 
     public override string InnerHTML()
     {
@@ -91,34 +137,49 @@ public class LightElementNode : LightNode
     }
 }
 
-// 4. Головний метод
+public class LightNodeIterator : IEnumerable<LightNode>
+{
+    private readonly LightNode _root;
+    public LightNodeIterator(LightNode root) { _root = root; }
+    public IEnumerator<LightNode> GetEnumerator()
+    {
+        Stack<LightNode> stack = new Stack<LightNode>();
+        stack.Push(_root);
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            yield return current;
+            if (current is LightElementNode element)
+            {
+                for (int i = element.Children.Count - 1; i >= 0; i--)
+                    stack.Push(element.Children[i]);
+            }
+        }
+    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-        // Створимо список <ul> з елементами <li>
-        LightElementNode ul = new LightElementNode("ul", "block", "normal");
-        ul.AddClass("my-list");
+        Console.WriteLine("=== ТЕСТУВАННЯ ШАБЛОНУ STATE ===\n");
 
-        LightElementNode li1 = new LightElementNode("li");
-        li1.AddChild(new LightTextNode("Перший елемент"));
+        LightElementNode div = new LightElementNode("div");
+        div.AddClass("container");
+        div.AddChild(new LightTextNode("Цей текст може зникнути!"));
 
-        LightElementNode li2 = new LightElementNode("li");
-        li2.AddChild(new LightTextNode("Другий елемент"));
+        Console.WriteLine("\n--- Початковий стан (Visible) ---");
+        Console.WriteLine(div.OuterHTML());
 
-        LightElementNode li3 = new LightElementNode("li");
-        li3.AddChild(new LightTextNode("Третій елемент"));
+        Console.WriteLine("\n--- Зміна стану на Hidden ---");
+        div.SetState(new HiddenState());
+        Console.WriteLine(div.OuterHTML());
 
-        ul.AddChild(li1);
-        ul.AddChild(li2);
-        ul.AddChild(li3);
-
-        Console.WriteLine("OuterHTML:");
-        Console.WriteLine(ul.OuterHTML());
-
-        Console.WriteLine("\nInnerHTML:");
-        Console.WriteLine(ul.InnerHTML());
+        Console.WriteLine("\n--- Повернення до Visible ---");
+        div.SetState(new VisibleState());
+        Console.WriteLine(div.OuterHTML());
     }
 }

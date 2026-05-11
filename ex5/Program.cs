@@ -7,6 +7,9 @@ public abstract class LightNode
 {
     public abstract string OuterHTML();
     public abstract string InnerHTML();
+
+    public virtual void OnCreated() { }
+    public virtual void OnStylesApplied() { }
 }
 
 // 2. Текстовий вузол
@@ -53,6 +56,8 @@ public class LightElementNode : LightNode
 
     public override string OuterHTML()
     {
+        OnCreated();
+
         StringBuilder sb = new StringBuilder();
         sb.Append("<" + TagName);
 
@@ -61,24 +66,25 @@ public class LightElementNode : LightNode
             sb.Append(" class=\"");
             sb.Append(string.Join(" ", CssClasses));
             sb.Append("\"");
+
+            OnStylesApplied();
         }
 
         if (ClosingType == "single")
         {
             sb.Append("/>");
-            return sb.ToString();
         }
         else
         {
             sb.Append(">");
-            foreach (var child in Children)
-            {
-                sb.Append(child.OuterHTML());
-            }
+            sb.Append(InnerHTML());
             sb.Append("</" + TagName + ">");
-            return sb.ToString();
         }
+
+        return sb.ToString();
     }
+    public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> було створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> успішно застосовано.");
 
     public override string InnerHTML()
     {

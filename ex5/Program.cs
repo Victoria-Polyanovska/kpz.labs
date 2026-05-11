@@ -117,7 +117,11 @@ public class LightElementNode : LightNode
             CssClasses.Add(cssClass);
             OnStylesApplied();
         }
+
+        return sb.ToString();
     }
+    public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> було створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> успішно застосовано.");
 
     public void AddChild(LightNode child) => Children.Add(child);
 
@@ -135,6 +139,37 @@ public class LightElementNode : LightNode
         }
         return sb.ToString();
     }
+}
+public class LightNodeIterator : IEnumerable<LightNode>
+{
+    private readonly LightNode _root;
+
+    public LightNodeIterator(LightNode root)
+    {
+        _root = root;
+    }
+
+    public IEnumerator<LightNode> GetEnumerator()
+    {
+        Stack<LightNode> stack = new Stack<LightNode>();
+        stack.Push(_root);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            yield return current;
+
+            if (current is LightElementNode element)
+            {
+                for (int i = element.Children.Count - 1; i >= 0; i--)
+                {
+                    stack.Push(element.Children[i]);
+                }
+            }
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
 public class LightNodeIterator : IEnumerable<LightNode>

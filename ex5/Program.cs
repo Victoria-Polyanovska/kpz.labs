@@ -1,34 +1,67 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-// 1. Базовий клас
+public interface ICommand
+{
+    void Execute();
+    void Undo();
+}
+
+public class AddClassCommand : ICommand
+{
+    private readonly LightElementNode _node;
+    private readonly string _cssClass;
+
+    public AddClassCommand(LightElementNode node, string cssClass)
+    {
+        _node = node;
+        _cssClass = cssClass;
+    }
+
+    public void Execute()
+    {
+        if (!_node.CssClasses.Contains(_cssClass))
+        {
+            _node.AddClass(_cssClass);
+        }
+    }
+
+    public void Undo()
+    {
+        if (_node.CssClasses.Contains(_cssClass))
+        {
+            _node.CssClasses.Remove(_cssClass);
+            Console.WriteLine($"[Command] Скасовано: Клас '{_cssClass}' видалено з <{_node.TagName}>");
+        }
+    }
+}
+
 public abstract class LightNode
 {
     public abstract string OuterHTML();
     public abstract string InnerHTML();
+
+    public virtual void OnCreated() { }
+    public virtual void OnStylesApplied() { }
+
+    public IEnumerable<LightNode> Enumerate() => new LightNodeIterator(this);
 }
 
-// 2. Текстовий вузол
 public class LightTextNode : LightNode
 {
     private string text;
-
-    public LightTextNode(string text)
-    {
-        this.text = text;
-    }
-
+    public LightTextNode(string text) { this.text = text; }
     public override string OuterHTML() => text;
     public override string InnerHTML() => text;
 }
 
-// 3. Елемент вузол
 public class LightElementNode : LightNode
 {
     public string TagName { get; }
-    public string DisplayType { get; } // block / inline
-    public string ClosingType { get; } // single / normal
+    public string DisplayType { get; }
+    public string ClosingType { get; }
     public List<string> CssClasses { get; }
     public List<LightNode> Children { get; }
 
@@ -39,17 +72,20 @@ public class LightElementNode : LightNode
         ClosingType = closingType;
         CssClasses = new List<string>();
         Children = new List<LightNode>();
+
+        OnCreated();
     }
 
     public void AddClass(string cssClass)
     {
         CssClasses.Add(cssClass);
+        OnStylesApplied();
     }
 
-    public void AddChild(LightNode child)
-    {
-        Children.Add(child);
-    }
+    public void AddChild(LightNode child) => Children.Add(child);
+
+    public override void OnCreated() => Console.WriteLine($"[Hook] Елемент <{TagName}> створено.");
+    public override void OnStylesApplied() => Console.WriteLine($"[Hook] Стилі для <{TagName}> оновлено.");
 
     public override string OuterHTML()
     {
@@ -66,18 +102,15 @@ public class LightElementNode : LightNode
         if (ClosingType == "single")
         {
             sb.Append("/>");
-            return sb.ToString();
         }
         else
         {
             sb.Append(">");
-            foreach (var child in Children)
-            {
-                sb.Append(child.OuterHTML());
-            }
+            sb.Append(InnerHTML());
             sb.Append("</" + TagName + ">");
-            return sb.ToString();
         }
+
+        return sb.ToString();
     }
 
     public override string InnerHTML()
@@ -90,35 +123,66 @@ public class LightElementNode : LightNode
         return sb.ToString();
     }
 }
+public class LightNodeIterator : IEnumerable<LightNode>
+{
+    private readonly LightNode _root;
 
-// 4. Головний метод
+    public LightNodeIterator(LightNode root)
+    {
+        _root = root;
+    }
+
+    public IEnumerator<LightNode> GetEnumerator()
+    {
+        Stack<LightNode> stack = new Stack<LightNode>();
+        stack.Push(_root);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            yield return current;
+
+            if (current is LightElementNode element)
+            {
+                for (int i = element.Children.Count - 1; i >= 0; i--)
+                {
+                    stack.Push(element.Children[i]);
+                }
+            }
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-        // Створимо список <ul> з елементами <li>
-        LightElementNode ul = new LightElementNode("ul", "block", "normal");
-        ul.AddClass("my-list");
+        Console.WriteLine("=== ТЕСТУВАННЯ ШАБЛОНІВ (КРОК 3: COMMAND) ===\n");
 
-        LightElementNode li1 = new LightElementNode("li");
-        li1.AddChild(new LightTextNode("Перший елемент"));
+        LightElementNode ul = new LightElementNode("ul");
+        LightElementNode li = new LightElementNode("li");
+        li.AddChild(new LightTextNode("Текст всередині команди"));
+        ul.AddChild(li);
 
-        LightElementNode li2 = new LightElementNode("li");
-        li2.AddChild(new LightTextNode("Другий елемент"));
+        var command = new AddClassCommand(ul, "highlighted-list");
 
-        LightElementNode li3 = new LightElementNode("li");
-        li3.AddChild(new LightTextNode("Третій елемент"));
-
-        ul.AddChild(li1);
-        ul.AddChild(li2);
-        ul.AddChild(li3);
-
-        Console.WriteLine("OuterHTML:");
+        Console.WriteLine("\n--- Виконання команди (Add Class) ---");
+        command.Execute();
         Console.WriteLine(ul.OuterHTML());
 
-        Console.WriteLine("\nInnerHTML:");
-        Console.WriteLine(ul.InnerHTML());
+        Console.WriteLine("\n--- Скасування команди (Undo) ---");
+        command.Undo();
+        Console.WriteLine(ul.OuterHTML());
+
+        Console.WriteLine("\n--- Перевірка Ітератора по всьому дереву ---");
+        foreach (var node in ul.Enumerate())
+        {
+            string name = node is LightElementNode el ? el.TagName : "TextNode";
+            Console.WriteLine($"Вузол у дереві: {name}");
+        }
     }
 }
